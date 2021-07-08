@@ -2,7 +2,7 @@ from src.sound.sounds import play_tng_fire_weapon
 from src.events.events import EVENTS, EventQueue
 
 from src.keys.keybd_sim import press_key, PRESS_KEY_DURATION_MS
-from src.keys.keys import CODES as KEY_CODES
+from src.keys.keys import MAPPINGS, CODES as KEY_CODES
 
 from Arduino import Arduino
 from time import sleep
@@ -66,6 +66,6 @@ def handle_movement_event(event: Any) -> None:
         release_key(KEY_CODES['s'])
 
 def handle_fire_weapon(event: Any) -> None:
-    #keybd_sim.press_key(keys.MAPPINGS[event.weapon_slot_id])
+    press_key(MAPPINGS[event.weapon_slot_id])
     play_tng_fire_weapon()
 

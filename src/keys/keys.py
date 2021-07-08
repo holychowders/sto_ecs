@@ -134,6 +134,6 @@ MAPPINGS = {
     SLOT_IDs.AFT_1: CODES['5'],
     SLOT_IDs.AFT_2: CODES['6'],
     SLOT_IDs.AFT_3: CODES['7'],
-    SLOT_IDs.AFT_4: CODES['6'],
+    SLOT_IDs.AFT_4: CODES['8'],
 }
 
