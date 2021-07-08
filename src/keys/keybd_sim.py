@@ -1,14 +1,7 @@
 import ctypes
 
 
-KEY_CODES = {
-    'w': 0x11,
-    'a': 0x1E,
-    's': 0x1F,
-    'd': 0x20,
-
-    'e': 0x12,
-}
+PRESS_KEY_DURATION_MS = 0.01
 
 
 SendInput = ctypes.windll.user32.SendInput

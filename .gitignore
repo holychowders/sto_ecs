@@ -1,3 +1,6 @@
-src/__pycache__/
+__pycache__/
+.mypy_cache/
+venv/
 notes/
+notes.md
 README.html

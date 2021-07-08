@@ -1,15 +1,14 @@
-from src import events
-
 from collections import namedtuple
 from typing import Iterable, Any  # TODO: Don't use `Any`! Create an `Event` type
 
 
 EVENTS = {
     'FlashLight': namedtuple('FlashLightEvent', ('pin', 'volt', 'dur_ms')),
-    'Movement': namedtuple('MovementEvent', ('dir'))
+    'Movement': namedtuple('MovementEvent', ('dir')),
+    'FireWeapon': namedtuple('FireWeaponEvent', ('weapon_slot_id')),
 }
 
-
+# This was made before the use of collections.deque and before this file was added to VCS, so I'm leaving it here for the next commit
 class EventQueue():
 
     def __init__(self) -> None:
