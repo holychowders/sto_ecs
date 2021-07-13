@@ -1,15 +1,20 @@
-from src.sound.sounds import play_tng_fire_weapon
-from src.events.events import EVENTS, EventQueue
+from src.components import weapons
+from src.sound import sounds
+from src.events.events import EVENTS
 
 from src.keys.keybd_sim import press_key, PRESS_KEY_DURATION_MS
 from src.keys.keys import MAPPINGS, CODES as KEY_CODES
 
+from threading import Thread
 from Arduino import Arduino
 from time import sleep
+
+# For typing
 from typing import Any  # TODO: Don't use `Any`. Create an `Event` type
+from collections import deque
 
 
-def handle_events(event_queue: EventQueue, board: Arduino = None) -> None:
+def handle_events(event_queue: deque[Any], board: Arduino = None) -> None:
     while True:
         event = event_queue.popleft()
         event_type = type(event)
@@ -17,22 +22,7 @@ def handle_events(event_queue: EventQueue, board: Arduino = None) -> None:
         if event_type == EVENTS['FlashLight']: handle_flash_light_event(event, board)
         elif event_type == EVENTS['Movement']: handle_movement_event(event)
         elif event_type == EVENTS['FireWeapon']: handle_fire_weapon(event)
-
-#def handle_events(event_queue: EventQueue, board: Arduino = None) -> None:
-#    for event in event_queue:
-#        event_type = type(event)
-#
-#        if event_type == EVENTS['FlashLight']:
-#            handle_flash_light_event(event, board)
-#
-#        elif event_type == EVENTS['Movement']:
-#            handle_movement_event(event)
-#
-#        elif event_type == EVENTS['FireWeapon']:
-#            handle_fire_weapon(event)
-#
-#    event_queue.clear()
-#    print('queue after clear:', event_queue)
+        elif event_type == EVENTS['FireWeaponsGroup']: handle_fire_weapons_group(event)
 
 def handle_flash_light_event(event: Any, board: Arduino) -> None:
     pin, volt, dur_ms = event.pin, event.volt, event.dur_ms
@@ -66,6 +56,34 @@ def handle_movement_event(event: Any) -> None:
         release_key(KEY_CODES['s'])
 
 def handle_fire_weapon(event: Any) -> None:
-    press_key(MAPPINGS[event.weapon_slot_id])
-    play_tng_fire_weapon()
+    slot = event.slot
+
+    # TODO: and `slot.is_available` (ie, not re-charging)
+    if slot.is_used:
+        press_keys = lambda: press_key(MAPPINGS[slot.id])
+
+        do_threaded(
+            press_keys,
+            sounds.play_tng_keypress_1,
+            sounds.play_tng_fire_weapon
+        )
+    else:
+        do_threaded(sounds.play_tng_invalid_keypress_1)
+
+def handle_fire_weapons_group(event: Any) -> None:
+    slots = event.slots.value
+
+    def handle() -> None:
+        sounds.play_tng_processed_input_1()
+        press_key(KEY_CODES['SPACE'])
+        sounds.play_tng_fire_weapon()
+        #for slot_id in slots:
+        #    sounds.play_tng_fire_weapon()
+        #    press_key(MAPPINGS[slot_id])
+        #    sleep(.3)
+
+    do_threaded(handle)
+
+def do_threaded(*functions: Any) -> None:
+    [Thread(target=function).start() for function in functions]
 

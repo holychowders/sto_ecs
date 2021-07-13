@@ -13,8 +13,6 @@ from src.components.weapons import SLOT_IDs
 #}
 
 CODES = {
-     '':            '',
-
     '1':            0x02,
     '2':            0x03,
     '3':            0x04,
