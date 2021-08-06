@@ -1,14 +1,13 @@
 from collections import namedtuple
-
 from typing import Tuple
 
 
-_widget_data_fields: Tuple[str, str, str, str] = ('int', 'column', 'rows', 'columns')
-WidgetData: WidgetData = namedtuple('WidgetData', _widget_data_fields, defaults=(None,) * len(_widget_data_fields))
+_widget_geometry_fields: Tuple[str, str, str, str] = ('left_px', 'top_px', 'width_px', 'height_px')
+WidgetGeometry: WidgetGeometry = namedtuple('WidgetGeometry', _widget_geometry_fields, defaults=(None,) * len(_widget_geometry_fields))
 
 
 SECTION_LABEL_DISPLAY_NAME: str = 'WEAPONS'
-SECTION_LABEL_WIDGET_DATA: WidgetData = WidgetData(0, 0, 12, 12)
+SECTION_LABEL_WIDGET_GEOMETRY: WidgetGeometry = WidgetGeometry(0, 0, 12, 12)
 SECTION_LABEL_STYLE_SHEET: str = (
     "*{" +
         "border: 10px dotted '#ff0000';" +
@@ -20,7 +19,7 @@ SECTION_LABEL_STYLE_SHEET: str = (
 )
 
 MODIFIERS_SECTION_DISPLAY_NAME: str = 'MODIFIERS'
-MODIFIERS_SECTION_LABEL_WIDGET_DATA: WidgetData = WidgetData(2, 2, 3, 8)
+MODIFIERS_SECTION_LABEL_WIDGET_GEOMETRY: WidgetGeometry = WidgetGeometry(2, 2, 3, 8)
 MODIFIERS_SECTION_LABEL_STYLE_SHEET: str = (
     "*{" +
         "border: 6px dotted '#ff0000';" +
@@ -32,7 +31,7 @@ MODIFIERS_SECTION_LABEL_STYLE_SHEET: str = (
 )
 
 FIRE_ALL_BUTTON_DISPLAY_NAME: str = 'FIRE ALL'
-FIRE_ALL_BUTTON_WIDGET_DATA: WidgetData = WidgetData(7, 5, 2, 2)
+FIRE_ALL_BUTTON_WIDGET_GEOMETRY: WidgetGeometry = WidgetGeometry(7, 5, 2, 2)
 FIRE_ALL_BUTTON_STYLE_SHEET: str = (
     "*{" +
         "border: 9px solid '#ff0000';" +

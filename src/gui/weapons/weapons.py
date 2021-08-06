@@ -20,9 +20,9 @@ def add_section_to_grid(weapon_slots: Slots, grid: QGridLayout) -> None:
     handler = on_fire_weapons_group(event)
     fire_all_button = create_button(FIRE_ALL_BUTTON_DISPLAY_NAME, FIRE_ALL_BUTTON_STYLE_SHEET, handler)
 
-    grid.addWidget(section_label, *SECTION_LABEL_WIDGET_DATA)
-    grid.addWidget(modifiers_section_label, *MODIFIERS_SECTION_LABEL_WIDGET_DATA)
-    grid.addWidget(fire_all_button, *FIRE_ALL_BUTTON_WIDGET_DATA)
+    grid.addWidget(section_label, *SECTION_LABEL_WIDGET_GEOMETRY)
+    grid.addWidget(modifiers_section_label, *MODIFIERS_SECTION_LABEL_WIDGET_GEOMETRY)
+    grid.addWidget(fire_all_button, *FIRE_ALL_BUTTON_WIDGET_GEOMETRY)
 
     row = FIRE_BUTTON_STARTING_ROW
     column = FIRE_BUTTON_LEFTMOST_COLUMN
