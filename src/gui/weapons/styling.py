@@ -42,8 +42,8 @@ FIRE_ALL_BUTTON_STYLE_SHEET: str = (
         "font-size: 23px;" +
     "}" +
     "*:pressed{" +
-        "border: '#aa0000';" +
-        "background: '#aa0000';" +
+        "border: '#ff0000';" +
+        "background: '#ff0000';" +
         "color: '#000000';" +
     "}"
 )
@@ -68,8 +68,8 @@ FIRE_BUTTON_STYLE_SHEET: str = (
         "font-size: 20px;" +
     "}" +
     "*:pressed{" +
-        "border: '#aa0000';" +
-        "background: '#aa0000';" +
+        "border: '#ff0000';" +
+        "background: '#ff0000';" +
         "color: '#000000';" +
     "}"
 )
