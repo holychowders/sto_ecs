@@ -2,6 +2,7 @@ from collections import namedtuple
 
 from typing import Tuple
 
+
 _widget_data_fields: Tuple[str, str, str, str] = ('int', 'column', 'rows', 'columns')
 WidgetData: WidgetData = namedtuple('WidgetData', _widget_data_fields, defaults=(None,) * len(_widget_data_fields))
 
@@ -41,9 +42,9 @@ FIRE_ALL_BUTTON_STYLE_SHEET: str = (
         "font-family: Shanti;" +
         "font-size: 23px;" +
     "}" +
-    "*:hover{" +
-        "border: '#ff0000';" +
-        "background: '#ff0000';" +
+    "*:pressed{" +
+        "border: '#aa0000';" +
+        "background: '#aa0000';" +
         "color: '#000000';" +
     "}"
 )
@@ -67,9 +68,9 @@ FIRE_BUTTON_STYLE_SHEET: str = (
         "font-family: Shanti;" +
         "font-size: 20px;" +
     "}" +
-    "*:hover{" +
-        "border: '#ff0000';" +
-        "background: '#ff0000';" +
+    "*:pressed{" +
+        "border: '#aa0000';" +
+        "background: '#aa0000';" +
         "color: '#000000';" +
     "}"
 )
