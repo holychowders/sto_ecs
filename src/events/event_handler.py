@@ -1,4 +1,3 @@
-from src.components import weapons
 from src.sound import sounds
 from src.events.events import EVENTS
 
