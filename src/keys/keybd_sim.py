@@ -1,4 +1,6 @@
 import ctypes
+import pygetwindow
+from time import sleep
 
 
 PRESS_KEY_DURATION_MS = 0.01
@@ -13,6 +15,10 @@ def press_key(hex_key_code: str) -> None:
 
     x = Input(ctypes.c_ulong(1), ii_)
 
+    _focus_game_window()
+    # FIXME: Find a smarter way to do this
+    sleep(.05)
+
     SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
 
 def release_key(hex_key_code: str) -> None:
@@ -24,6 +30,17 @@ def release_key(hex_key_code: str) -> None:
 
     SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
 
+# TODO: If this project is going to run on an independent device (it should) such that all a user has to do is plug in a Raspberry Pi or something,
+# we probably won't need to do this and could probably just do what we were doing before -- just send keypresses. If the user has the
+# game in focus, our project's GUI shouldn'ttake away focus from the game when it is used since it's on another device.
+def _focus_game_window() -> None:
+    # FIXME: Potential bug: Any other window with the exact name will be included in the list of window objects returned
+    for window in pygetwindow.getWindowsWithTitle('Star Trek Online'):
+        if window.title == 'Star Trek Online':
+            game_window = window
+            break
+
+    game_window.activate()
 
 # C struct redefinitions
 

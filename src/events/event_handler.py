@@ -9,10 +9,10 @@ from Arduino import Arduino
 from time import sleep
 
 # For typing
-from typing import Any  # TODO: Don't use `Any`. Create an `Event` type
+from typing import Any
 from collections import deque
 
-
+# TODO: Don't use `Any` for deque. Create an `Event` type
 def handle_events(event_queue: deque[Any], board: Arduino = None) -> None:
     while True:
         event = event_queue.popleft()
@@ -32,24 +32,24 @@ def handle_flash_light_event(event: Any, board: Arduino) -> None:
     board.analogWrite(pin, original_volt)
 
 def handle_movement_event(event: Any) -> None:
-    dir = event.dir
+    direction = event.dir
 
-    if dir == 'Left':
+    if direction == 'Left':
         press_key(KEY_CODES['a'])
         sleep(PRESS_KEY_DURATION_MS)
         release_key(KEY_CODES['a'])
 
-    elif dir == 'Right':
+    elif direction == 'Right':
         press_key(KEY_CODES['d'])
         sleep(PRESS_KEY_DURATION_MS)
         release_key(KEY_CODES['d'])
 
-    elif dir == 'Up':
+    elif direction == 'Up':
         press_key(KEY_CODES['w'])
         sleep(PRESS_KEY_DURATION_MS)
         release_key(KEY_CODES['w'])
 
-    elif dir == 'Down':
+    elif direction == 'Down':
         press_key(KEY_CODES['s'])
         sleep(PRESS_KEY_DURATION_MS)
         release_key(KEY_CODES['s'])
@@ -59,30 +59,25 @@ def handle_fire_weapon(event: Any) -> None:
 
     # TODO: and `slot.is_available` (ie, not re-charging)
     if slot.is_used:
-        press_keys = lambda: press_key(MAPPINGS[slot.id])
-
-        do_threaded(
-            press_keys,
+        _do_threaded(
+            lambda: press_key(MAPPINGS[slot.id]),
             sounds.play_tng_keypress_1,
             sounds.play_tng_fire_weapon
         )
     else:
-        do_threaded(sounds.play_tng_invalid_keypress_1)
+        _do_threaded(sounds.play_tng_invalid_keypress_1)
 
 def handle_fire_weapons_group(event: Any) -> None:
     slots = event.slots.value
 
     def handle() -> None:
-        sounds.play_tng_processed_input_1()
         press_key(KEY_CODES['SPACE'])
+
+        sounds.play_tng_processed_input_1()
         sounds.play_tng_fire_weapon()
-        #for slot_id in slots:
-        #    sounds.play_tng_fire_weapon()
-        #    press_key(MAPPINGS[slot_id])
-        #    sleep(.3)
 
-    do_threaded(handle)
+    _do_threaded(handle)
 
-def do_threaded(*functions: Any) -> None:
+def _do_threaded(*functions: Any) -> None:
     [Thread(target=function).start() for function in functions]
 
