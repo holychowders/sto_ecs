@@ -1,8 +1,8 @@
 from src.sound import sounds
 from src.events.events import EVENTS
 
-from src.keys.keybd_sim import press_key, PRESS_KEY_DURATION_MS
-from src.keys.keys import MAPPINGS, CODES as KEY_CODES
+from src.keys.keybd_sim import press_key
+from src.keys.keys import MAPPINGS
 
 from threading import Thread
 from Arduino import Arduino
@@ -35,24 +35,13 @@ def handle_movement_event(event: Any) -> None:
     direction = event.dir
 
     if direction == 'Left':
-        press_key(KEY_CODES['a'])
-        sleep(PRESS_KEY_DURATION_MS)
-        release_key(KEY_CODES['a'])
-
+        press_key('a')
     elif direction == 'Right':
-        press_key(KEY_CODES['d'])
-        sleep(PRESS_KEY_DURATION_MS)
-        release_key(KEY_CODES['d'])
-
+        press_key('d')
     elif direction == 'Up':
-        press_key(KEY_CODES['w'])
-        sleep(PRESS_KEY_DURATION_MS)
-        release_key(KEY_CODES['w'])
-
+        press_key('w')
     elif direction == 'Down':
-        press_key(KEY_CODES['s'])
-        sleep(PRESS_KEY_DURATION_MS)
-        release_key(KEY_CODES['s'])
+        press_key('s')
 
 def handle_fire_weapon(event: Any) -> None:
     slot = event.slot
@@ -61,6 +50,7 @@ def handle_fire_weapon(event: Any) -> None:
     if slot.is_used:
         _do_threaded(
             lambda: press_key(MAPPINGS[slot.id]),
+
             sounds.play_tng_keypress_1,
             sounds.play_tng_fire_weapon
         )
@@ -71,7 +61,7 @@ def handle_fire_weapons_group(event: Any) -> None:
     slots = event.slots.value
 
     def handle() -> None:
-        press_key(KEY_CODES['SPACE'])
+        press_key(' ')
 
         sounds.play_tng_processed_input_1()
         sounds.play_tng_fire_weapon()
