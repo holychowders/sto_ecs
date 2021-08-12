@@ -7,7 +7,7 @@ from time import sleep
 def press_key(char: str) -> None:
     _focus_game_window()
     sleep(.4)  # FIXME: Find a smarter way to ensure the game is ready to accept input
-    press('r')
+    press(char)
 
 # FIXME: Make the game window global
 def _focus_game_window() -> None:
