@@ -52,7 +52,7 @@ def handle_fire_weapon(event: Any) -> None:
             lambda: press_key(MAPPINGS[slot.id]),
 
             sounds.play_tng_keypress_1,
-            sounds.play_tng_fire_weapon
+            sounds.play_tng_fire_weapon,
         )
     else:
         _do_threaded(sounds.play_tng_invalid_keypress_1)
@@ -60,13 +60,14 @@ def handle_fire_weapon(event: Any) -> None:
 def handle_fire_weapons_group(event: Any) -> None:
     slots = event.slots.value
 
-    def handle() -> None:
-        press_key(' ')
-
+    def play_sounds() -> None:
         sounds.play_tng_processed_input_1()
         sounds.play_tng_fire_weapon()
 
-    _do_threaded(handle)
+    _do_threaded(
+        lambda: press_key(' '),
+        play_sounds,
+    )
 
 def _do_threaded(*functions: Any) -> None:
     [Thread(target=function).start() for function in functions]
