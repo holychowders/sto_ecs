@@ -18,7 +18,6 @@ PyRect==0.1.4
 PyScreeze==0.1.27
 pyserial==3.5
 PyTweening==1.0.3
-pywin32==301
 six==1.16.0
 toml==0.10.2
 typing-extensions==3.10.0.0
