@@ -11,7 +11,6 @@ from src.components.weapons import SLOT_GROUPS, Slots, Slot
 from src.gui.gui import WidgetStyling
 from typing import Any
 from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtCore import Qt
 
 
 # TODO: Consider making a WeaponsGui class since the same data seem to be being passed around repeatedly
@@ -27,10 +26,12 @@ def add_header_label_to_grid(grid: QGridLayout) -> None:
 
     grid.addWidget(header_label, *HEADER_STYLING.geometry.asTupleForAddingToGridWithLayout())
 
+
 def add_modifiers_label_to_grid(grid: QGridLayout) -> None:
     modifiers_label = create_label(MODIFIERS_STYLING)
 
     grid.addWidget(modifiers_label, *MODIFIERS_STYLING.geometry.asTupleForAddingToGridWithLayout())
+
 
 def add_fire_all_button_to_grid(grid: QGridLayout) -> None:
     event = EVENTS['FireWeaponsGroup'](SLOT_GROUPS.ALL)
@@ -39,6 +40,15 @@ def add_fire_all_button_to_grid(grid: QGridLayout) -> None:
     button = create_button(FIRE_ALL_BUTTON_STYLING, handler)
 
     grid.addWidget(button, *FIRE_ALL_BUTTON_STYLING.geometry.asTupleForAddingToGridWithLayout())
+
+def get_on_fire_weapons_group_handler(event: Any) -> Any:
+    event = event
+
+    def handle_fire_weapons_groups_event() -> None:
+        handle_fire_weapons_group(event)
+
+    return handle_fire_weapons_groups_event
+
 
 def add_fire_buttons_to_grid(weapon_slots: Slots, grid: QGridLayout) -> None:
     styling = FIRE_BUTTON_INITIAL_STYLING_DATA
@@ -56,6 +66,13 @@ def add_fire_buttons_to_grid(weapon_slots: Slots, grid: QGridLayout) -> None:
 
         grid.addWidget(fire_button, *styling.geometry.asTupleForAddingToGridWithLayout())
 
+def update_fire_button_style_sheet(slot: Slots, styling_data: WidgetStyling) -> None:
+        # TODO: If this is the case, can flash a button on the weapons section. We do want to use the same event for this case
+        if not slot.is_used:
+            styling_data.style_sheet = FIRE_BUTTON_UNUSED_STYLE_SHEET
+        else:
+            styling_data.style_sheet = FIRE_BUTTON_STYLE_SHEET
+
 def update_fire_button_geometry(slot: Slot, styling_data: WidgetStyling) -> None:
     if slot.id == SLOT_IDs.FORWARD_1:
         styling_data.geometry.x_pos = FIRE_BUTTON_LEFTMOST_POSITION_PX
@@ -65,13 +82,6 @@ def update_fire_button_geometry(slot: Slot, styling_data: WidgetStyling) -> None
     else:
         styling_data.geometry.x_pos += FIRE_BUTTON_HORIZONTAL_SPACING_PX
 
-def update_fire_button_style_sheet(slot: Slots, styling_data: WidgetStyling) -> None:
-        # TODO: If this is the case, can flash a button on the weapons section. We do want to use the same event for this case
-        if not slot.is_used:
-            styling_data.style_sheet = FIRE_BUTTON_UNUSED_STYLE_SHEET
-        else:
-            styling_data.style_sheet = FIRE_BUTTON_STYLE_SHEET
-
 def get_fire_weapon_handler(event: Any) -> Any:
     event = event
 
@@ -79,12 +89,3 @@ def get_fire_weapon_handler(event: Any) -> Any:
         handle_fire_weapon(event)
 
     return handle_fire_weapon_event
-
-def get_on_fire_weapons_group_handler(event: Any) -> Any:
-    event = event
-
-    def handle_fire_weapons_groups_event() -> None:
-        handle_fire_weapons_group(event)
-
-    return handle_fire_weapons_groups_event
-

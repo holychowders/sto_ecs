@@ -1,5 +1,6 @@
 from src.gui import gui
 from src.gui.weapons import weapons as gui_weapons
+
 from src.components import weapons
 
 from PyQt5.QtWidgets import QApplication, QGridLayout
@@ -18,5 +19,5 @@ def main() -> int:
     main_widget.setLayout(grid)
 
     main_widget.showMaximized()
-    return sys.exit(sto_gui.exec())
 
+    return sys.exit(sto_gui.exec())
