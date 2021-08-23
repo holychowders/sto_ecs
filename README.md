@@ -1,6 +1,6 @@
 # STO_ECS - *Star Trek Online Embedded Control System*
 
-STO_ECS is an independent project to create an embedded control system to liven the gameplay experience of the [Star Trek Online](https://www.arcgames.com/en/games/star-trek-online/).
+STO_ECS is an independent project to create an embedded control system to liven the gameplay experience of [Star Trek Online](https://www.arcgames.com/en/games/star-trek-online/).
 
 ### VISION:
 The end-goal of this project is to physically emulate a Star-Trek-like space exploration and combat experience through integrated digital control panels within a space-ship-like vehicle. The user will be able to view and control the status of their ship through these interfaces.
